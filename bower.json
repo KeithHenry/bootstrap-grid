@@ -1,5 +1,5 @@
 {
-  "name": "bootstrap-grid",
+  "name": "polymer-bootstrap-grid",
   "description": "Use Bootstrap responsive grid styles in a Polymer component.",
   "main": "bootstrap-grid.html",
   "authors": ["Keith Henry <keith.henry@evolutionjobs.co.uk> (https://www.evolutionjobs.com/uk/)"],

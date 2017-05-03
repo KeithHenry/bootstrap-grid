@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
 
 <!--
 `bootstrap-grid`
@@ -6,356 +7,394 @@ Use Bootstrap responsive grid styles in a Polymer component.
 
 @demo demo/index.html 
 -->
-<dom-module id="bootstrap-grid">
+<dom-module id="bootstrap-row">
     <template strip-whitespace>
         <style>
-            :host { 
-                display: block; 
-                margin-right: auto; 
-                margin-left: auto; 
+            :host {
+                display: block;
+                margin-left: var(--bootstrap-grid-gutter * -1, -15px);
+                margin-right: var(--bootstrap-grid-gutter * -1, -15px);
                 padding-left: var(--bootstrap-grid-gutter, 15px);
-                padding-right: var(--bootstrap-grid-gutter, 15px); 
+                padding-right: var(--bootstrap-grid-gutter, 15px);
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
             }
 
-                /* Apply border-box to everything */
-                :host ::content * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
-                    :host ::content *:before,
-                    :host ::content *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
-                /* Clear fix/fix floats for the grid container and each row */
-                :host:before,
-                :host:after,
-                :host ::content .row:before,
-                :host ::content .row:after { content: " "; display: table; }
+            /* Apply border-box to everything */
+            :host ::slotted(*) { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+                :host ::slotted(*:before),
+                :host ::slotted(*:after) { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
-                :host:after,
-                :host ::content .row:after { clear: both; }
+            /* Clear fix/fix floats for the grid container and each row */
+            :host:before,
+            :host:after {
+                content: " ";
+                display: table;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
 
-                :host ::content .row { 
-                    margin-left: var(--bootstrap-grid-gutter * -1, -15px); 
-                    margin-right: var(--bootstrap-grid-gutter * -1, -15px);
+            :host:after { clear: both; }
+
+                /* Default xs styles */
+                :host ::slotted(.col-xs-1),
+                :host ::slotted(.col-sm-1),
+                :host ::slotted(.col-md-1),
+                :host ::slotted(.col-lg-1),
+                :host ::slotted(.col-xs-2),
+                :host ::slotted(.col-sm-2),
+                :host ::slotted(.col-md-2),
+                :host ::slotted(.col-lg-2),
+                :host ::slotted(.col-xs-3),
+                :host ::slotted(.col-sm-3),
+                :host ::slotted(.col-md-3),
+                :host ::slotted(.col-lg-3),
+                :host ::slotted(.col-xs-4),
+                :host ::slotted(.col-sm-4),
+                :host ::slotted(.col-md-4),
+                :host ::slotted(.col-lg-4),
+                :host ::slotted(.col-xs-5),
+                :host ::slotted(.col-sm-5),
+                :host ::slotted(.col-md-5),
+                :host ::slotted(.col-lg-5),
+                :host ::slotted(.col-xs-6),
+                :host ::slotted(.col-sm-6),
+                :host ::slotted(.col-md-6),
+                :host ::slotted(.col-lg-6),
+                :host ::slotted(.col-xs-7),
+                :host ::slotted(.col-sm-7),
+                :host ::slotted(.col-md-7),
+                :host ::slotted(.col-lg-7),
+                :host ::slotted(.col-xs-8),
+                :host ::slotted(.col-sm-8),
+                :host ::slotted(.col-md-8),
+                :host ::slotted(.col-lg-8),
+                :host ::slotted(.col-xs-9),
+                :host ::slotted(.col-sm-9),
+                :host ::slotted(.col-md-9),
+                :host ::slotted(.col-lg-9),
+                :host ::slotted(.col-xs-10),
+                :host ::slotted(.col-sm-10),
+                :host ::slotted(.col-md-10),
+                :host ::slotted(.col-lg-10),
+                :host ::slotted(.col-xs-11),
+                :host ::slotted(.col-sm-11),
+                :host ::slotted(.col-md-11),
+                :host ::slotted(.col-lg-11),
+                :host ::slotted(.col-xs-12),
+                :host ::slotted(.col-sm-12),
+                :host ::slotted(.col-md-12),
+                :host ::slotted(.col-lg-12) { 
+                    position: relative; 
+                    min-height: 1px; 
+                    padding-left: var(--bootstrap-grid-gutter, 15px); 
+                    padding-right: var(--bootstrap-grid-gutter, 15px); 
                 }
-
-                    /* Default xs styles */
-                    :host ::content .row > .col-xs-1,
-                    :host ::content .row > .col-sm-1,
-                    :host ::content .row > .col-md-1,
-                    :host ::content .row > .col-lg-1,
-                    :host ::content .row > .col-xs-2,
-                    :host ::content .row > .col-sm-2,
-                    :host ::content .row > .col-md-2,
-                    :host ::content .row > .col-lg-2,
-                    :host ::content .row > .col-xs-3,
-                    :host ::content .row > .col-sm-3,
-                    :host ::content .row > .col-md-3,
-                    :host ::content .row > .col-lg-3,
-                    :host ::content .row > .col-xs-4,
-                    :host ::content .row > .col-sm-4,
-                    :host ::content .row > .col-md-4,
-                    :host ::content .row > .col-lg-4,
-                    :host ::content .row > .col-xs-5,
-                    :host ::content .row > .col-sm-5,
-                    :host ::content .row > .col-md-5,
-                    :host ::content .row > .col-lg-5,
-                    :host ::content .row > .col-xs-6,
-                    :host ::content .row > .col-sm-6,
-                    :host ::content .row > .col-md-6,
-                    :host ::content .row > .col-lg-6,
-                    :host ::content .row > .col-xs-7,
-                    :host ::content .row > .col-sm-7,
-                    :host ::content .row > .col-md-7,
-                    :host ::content .row > .col-lg-7,
-                    :host ::content .row > .col-xs-8,
-                    :host ::content .row > .col-sm-8,
-                    :host ::content .row > .col-md-8,
-                    :host ::content .row > .col-lg-8,
-                    :host ::content .row > .col-xs-9,
-                    :host ::content .row > .col-sm-9,
-                    :host ::content .row > .col-md-9,
-                    :host ::content .row > .col-lg-9,
-                    :host ::content .row > .col-xs-10,
-                    :host ::content .row > .col-sm-10,
-                    :host ::content .row > .col-md-10,
-                    :host ::content .row > .col-lg-10,
-                    :host ::content .row > .col-xs-11,
-                    :host ::content .row > .col-sm-11,
-                    :host ::content .row > .col-md-11,
-                    :host ::content .row > .col-lg-11,
-                    :host ::content .row > .col-xs-12,
-                    :host ::content .row > .col-sm-12,
-                    :host ::content .row > .col-md-12,
-                    :host ::content .row > .col-lg-12 { 
-                        position: relative; 
-                        min-height: 1px; 
-                        padding-left: var(--bootstrap-grid-gutter, 15px); 
-                        padding-right: var(--bootstrap-grid-gutter, 15px); 
-                    }
-                    :host ::content .row > .col-xs-1,
-                    :host ::content .row > .col-xs-2,
-                    :host ::content .row > .col-xs-3,
-                    :host ::content .row > .col-xs-4,
-                    :host ::content .row > .col-xs-5,
-                    :host ::content .row > .col-xs-6,
-                    :host ::content .row > .col-xs-7,
-                    :host ::content .row > .col-xs-8,
-                    :host ::content .row > .col-xs-9,
-                    :host ::content .row > .col-xs-10,
-                    :host ::content .row > .col-xs-11,
-                    :host ::content .row > .col-xs-12 { float: left; }
-                    :host ::content .row > .col-xs-12 { width: 100%; }
-                    :host ::content .row > .col-xs-11 { width: 91.66666667%; }
-                    :host ::content .row > .col-xs-10 { width: 83.33333333%; }
-                    :host ::content .row > .col-xs-9 { width: 75%; }
-                    :host ::content .row > .col-xs-8 { width: 66.66666667%; }
-                    :host ::content .row > .col-xs-7 { width: 58.33333333%; }
-                    :host ::content .row > .col-xs-6 { width: 50%; }
-                    :host ::content .row > .col-xs-5 { width: 41.66666667%; }
-                    :host ::content .row > .col-xs-4 { width: 33.33333333%; }
-                    :host ::content .row > .col-xs-3 { width: 25%; }
-                    :host ::content .row > .col-xs-2 { width: 16.66666667%; }
-                    :host ::content .row > .col-xs-1 { width: 8.33333333%; }
-                    :host ::content .row > .col-xs-pull-12 { right: 100%; }
-                    :host ::content .row > .col-xs-pull-11 { right: 91.66666667%; }
-                    :host ::content .row > .col-xs-pull-10 { right: 83.33333333%; }
-                    :host ::content .row > .col-xs-pull-9 { right: 75%; }
-                    :host ::content .row > .col-xs-pull-8 { right: 66.66666667%; }
-                    :host ::content .row > .col-xs-pull-7 { right: 58.33333333%; }
-                    :host ::content .row > .col-xs-pull-6 { right: 50%; }
-                    :host ::content .row > .col-xs-pull-5 { right: 41.66666667%; }
-                    :host ::content .row > .col-xs-pull-4 { right: 33.33333333%; }
-                    :host ::content .row > .col-xs-pull-3 { right: 25%; }
-                    :host ::content .row > .col-xs-pull-2 { right: 16.66666667%; }
-                    :host ::content .row > .col-xs-pull-1 { right: 8.33333333%; }
-                    :host ::content .row > .col-xs-pull-0 { right: auto; }
-                    :host ::content .row > .col-xs-push-12 { left: 100%; }
-                    :host ::content .row > .col-xs-push-11 { left: 91.66666667%; }
-                    :host ::content .row > .col-xs-push-10 { left: 83.33333333%; }
-                    :host ::content .row > .col-xs-push-9 { left: 75%; }
-                    :host ::content .row > .col-xs-push-8 { left: 66.66666667%; }
-                    :host ::content .row > .col-xs-push-7 { left: 58.33333333%; }
-                    :host ::content .row > .col-xs-push-6 { left: 50%; }
-                    :host ::content .row > .col-xs-push-5 { left: 41.66666667%; }
-                    :host ::content .row > .col-xs-push-4 { left: 33.33333333%; }
-                    :host ::content .row > .col-xs-push-3 { left: 25%; }
-                    :host ::content .row > .col-xs-push-2 { left: 16.66666667%; }
-                    :host ::content .row > .col-xs-push-1 { left: 8.33333333%; }
-                    :host ::content .row > .col-xs-push-0 { left: auto; }
-                    :host ::content .row > .col-xs-offset-12 { margin-left: 100%; }
-                    :host ::content .row > .col-xs-offset-11 { margin-left: 91.66666667%; }
-                    :host ::content .row > .col-xs-offset-10 { margin-left: 83.33333333%; }
-                    :host ::content .row > .col-xs-offset-9 { margin-left: 75%; }
-                    :host ::content .row > .col-xs-offset-8 { margin-left: 66.66666667%; }
-                    :host ::content .row > .col-xs-offset-7 { margin-left: 58.33333333%; }
-                    :host ::content .row > .col-xs-offset-6 { margin-left: 50%; }
-                    :host ::content .row > .col-xs-offset-5 { margin-left: 41.66666667%; }
-                    :host ::content .row > .col-xs-offset-4 { margin-left: 33.33333333%; }
-                    :host ::content .row > .col-xs-offset-3 { margin-left: 25%; }
-                    :host ::content .row > .col-xs-offset-2 { margin-left: 16.66666667%; }
-                    :host ::content .row > .col-xs-offset-1 { margin-left: 8.33333333%; }
-                    :host ::content .row > .col-xs-offset-0 { margin-left: 0%; }
+                :host ::slotted(.col-xs-1),
+                :host ::slotted(.col-xs-2),
+                :host ::slotted(.col-xs-3),
+                :host ::slotted(.col-xs-4),
+                :host ::slotted(.col-xs-5),
+                :host ::slotted(.col-xs-6),
+                :host ::slotted(.col-xs-7),
+                :host ::slotted(.col-xs-8),
+                :host ::slotted(.col-xs-9),
+                :host ::slotted(.col-xs-10),
+                :host ::slotted(.col-xs-11),
+                :host ::slotted(.col-xs-12) { float: left; }
+                :host ::slotted(.col-xs-12) { width: 100%; }
+                :host ::slotted(.col-xs-11) { width: 91.66666667%; }
+                :host ::slotted(.col-xs-10) { width: 83.33333333%; }
+                :host ::slotted(.col-xs-9) { width: 75%; }
+                :host ::slotted(.col-xs-8) { width: 66.66666667%; }
+                :host ::slotted(.col-xs-7) { width: 58.33333333%; }
+                :host ::slotted(.col-xs-6) { width: 50%; }
+                :host ::slotted(.col-xs-5) { width: 41.66666667%; }
+                :host ::slotted(.col-xs-4) { width: 33.33333333%; }
+                :host ::slotted(.col-xs-3) { width: 25%; }
+                :host ::slotted(.col-xs-2) { width: 16.66666667%; }
+                :host ::slotted(.col-xs-1) { width: 8.33333333%; }
+                :host ::slotted(.col-xs-pull-12) { right: 100%; }
+                :host ::slotted(.col-xs-pull-11) { right: 91.66666667%; }
+                :host ::slotted(.col-xs-pull-10) { right: 83.33333333%; }
+                :host ::slotted(.col-xs-pull-9) { right: 75%; }
+                :host ::slotted(.col-xs-pull-8) { right: 66.66666667%; }
+                :host ::slotted(.col-xs-pull-7) { right: 58.33333333%; }
+                :host ::slotted(.col-xs-pull-6) { right: 50%; }
+                :host ::slotted(.col-xs-pull-5) { right: 41.66666667%; }
+                :host ::slotted(.col-xs-pull-4) { right: 33.33333333%; }
+                :host ::slotted(.col-xs-pull-3) { right: 25%; }
+                :host ::slotted(.col-xs-pull-2) { right: 16.66666667%; }
+                :host ::slotted(.col-xs-pull-1) { right: 8.33333333%; }
+                :host ::slotted(.col-xs-pull-0) { right: auto; }
+                :host ::slotted(.col-xs-push-12) { left: 100%; }
+                :host ::slotted(.col-xs-push-11) { left: 91.66666667%; }
+                :host ::slotted(.col-xs-push-10) { left: 83.33333333%; }
+                :host ::slotted(.col-xs-push-9) { left: 75%; }
+                :host ::slotted(.col-xs-push-8) { left: 66.66666667%; }
+                :host ::slotted(.col-xs-push-7) { left: 58.33333333%; }
+                :host ::slotted(.col-xs-push-6) { left: 50%; }
+                :host ::slotted(.col-xs-push-5) { left: 41.66666667%; }
+                :host ::slotted(.col-xs-push-4) { left: 33.33333333%; }
+                :host ::slotted(.col-xs-push-3) { left: 25%; }
+                :host ::slotted(.col-xs-push-2) { left: 16.66666667%; }
+                :host ::slotted(.col-xs-push-1) { left: 8.33333333%; }
+                :host ::slotted(.col-xs-push-0) { left: auto; }
+                :host ::slotted(.col-xs-offset-12) { margin-left: 100%; }
+                :host ::slotted(.col-xs-offset-11) { margin-left: 91.66666667%; }
+                :host ::slotted(.col-xs-offset-10) { margin-left: 83.33333333%; }
+                :host ::slotted(.col-xs-offset-9) { margin-left: 75%; }
+                :host ::slotted(.col-xs-offset-8) { margin-left: 66.66666667%; }
+                :host ::slotted(.col-xs-offset-7) { margin-left: 58.33333333%; }
+                :host ::slotted(.col-xs-offset-6) { margin-left: 50%; }
+                :host ::slotted(.col-xs-offset-5) { margin-left: 41.66666667%; }
+                :host ::slotted(.col-xs-offset-4) { margin-left: 33.33333333%; }
+                :host ::slotted(.col-xs-offset-3) { margin-left: 25%; }
+                :host ::slotted(.col-xs-offset-2) { margin-left: 16.66666667%; }
+                :host ::slotted(.col-xs-offset-1) { margin-left: 8.33333333%; }
+                :host ::slotted(.col-xs-offset-0) { margin-left: 0%; }
 
             /* Override once screen is wider than 768px */
             @media (min-width: 768px) {
-                :host ::content .row > .col-sm-1,
-                :host ::content .row > .col-sm-2,
-                :host ::content .row > .col-sm-3,
-                :host ::content .row > .col-sm-4,
-                :host ::content .row > .col-sm-5,
-                :host ::content .row > .col-sm-6,
-                :host ::content .row > .col-sm-7,
-                :host ::content .row > .col-sm-8,
-                :host ::content .row > .col-sm-9,
-                :host ::content .row > .col-sm-10,
-                :host ::content .row > .col-sm-11,
-                :host ::content .row > .col-sm-12 { float: left; }
-                :host ::content .row > .col-sm-12 { width: 100%; }
-                :host ::content .row > .col-sm-11 { width: 91.66666667%; }
-                :host ::content .row > .col-sm-10 { width: 83.33333333%; }
-                :host ::content .row > .col-sm-9 { width: 75%; }
-                :host ::content .row > .col-sm-8 { width: 66.66666667%; }
-                :host ::content .row > .col-sm-7 { width: 58.33333333%; }
-                :host ::content .row > .col-sm-6 { width: 50%; }
-                :host ::content .row > .col-sm-5 { width: 41.66666667%; }
-                :host ::content .row > .col-sm-4 { width: 33.33333333%; }
-                :host ::content .row > .col-sm-3 { width: 25%; }
-                :host ::content .row > .col-sm-2 { width: 16.66666667%; }
-                :host ::content .row > .col-sm-1 { width: 8.33333333%; }
-                :host ::content .row > .col-sm-pull-12 { right: 100%; }
-                :host ::content .row > .col-sm-pull-11 { right: 91.66666667%; }
-                :host ::content .row > .col-sm-pull-10 { right: 83.33333333%; }
-                :host ::content .row > .col-sm-pull-9 { right: 75%; }
-                :host ::content .row > .col-sm-pull-8 { right: 66.66666667%; }
-                :host ::content .row > .col-sm-pull-7 { right: 58.33333333%; }
-                :host ::content .row > .col-sm-pull-6 { right: 50%; }
-                :host ::content .row > .col-sm-pull-5 { right: 41.66666667%; }
-                :host ::content .row > .col-sm-pull-4 { right: 33.33333333%; }
-                :host ::content .row > .col-sm-pull-3 { right: 25%; }
-                :host ::content .row > .col-sm-pull-2 { right: 16.66666667%; }
-                :host ::content .row > .col-sm-pull-1 { right: 8.33333333%; }
-                :host ::content .row > .col-sm-pull-0 { right: auto; }
-                :host ::content .row > .col-sm-push-12 { left: 100%; }
-                :host ::content .row > .col-sm-push-11 { left: 91.66666667%; }
-                :host ::content .row > .col-sm-push-10 { left: 83.33333333%; }
-                :host ::content .row > .col-sm-push-9 { left: 75%; }
-                :host ::content .row > .col-sm-push-8 { left: 66.66666667%; }
-                :host ::content .row > .col-sm-push-7 { left: 58.33333333%; }
-                :host ::content .row > .col-sm-push-6 { left: 50%; }
-                :host ::content .row > .col-sm-push-5 { left: 41.66666667%; }
-                :host ::content .row > .col-sm-push-4 { left: 33.33333333%; }
-                :host ::content .row > .col-sm-push-3 { left: 25%; }
-                :host ::content .row > .col-sm-push-2 { left: 16.66666667%; }
-                :host ::content .row > .col-sm-push-1 { left: 8.33333333%; }
-                :host ::content .row > .col-sm-push-0 { left: auto; }
-                :host ::content .row > .col-sm-offset-12 { margin-left: 100%; }
-                :host ::content .row > .col-sm-offset-11 { margin-left: 91.66666667%; }
-                :host ::content .row > .col-sm-offset-10 { margin-left: 83.33333333%; }
-                :host ::content .row > .col-sm-offset-9 { margin-left: 75%; }
-                :host ::content .row > .col-sm-offset-8 { margin-left: 66.66666667%; }
-                :host ::content .row > .col-sm-offset-7 { margin-left: 58.33333333%; }
-                :host ::content .row > .col-sm-offset-6 { margin-left: 50%; }
-                :host ::content .row > .col-sm-offset-5 { margin-left: 41.66666667%; }
-                :host ::content .row > .col-sm-offset-4 { margin-left: 33.33333333%; }
-                :host ::content .row > .col-sm-offset-3 { margin-left: 25%; }
-                :host ::content .row > .col-sm-offset-2 { margin-left: 16.66666667%; }
-                :host ::content .row > .col-sm-offset-1 { margin-left: 8.33333333%; }
-                :host ::content .row > .col-sm-offset-0 { margin-left: 0%; }
+                :host ::slotted(.col-sm-1),
+                :host ::slotted(.col-sm-2),
+                :host ::slotted(.col-sm-3),
+                :host ::slotted(.col-sm-4),
+                :host ::slotted(.col-sm-5),
+                :host ::slotted(.col-sm-6),
+                :host ::slotted(.col-sm-7),
+                :host ::slotted(.col-sm-8),
+                :host ::slotted(.col-sm-9),
+                :host ::slotted(.col-sm-10),
+                :host ::slotted(.col-sm-11),
+                :host ::slotted(.col-sm-12) { float: left; }
+                :host ::slotted(.col-sm-12) { width: 100%; }
+                :host ::slotted(.col-sm-11) { width: 91.66666667%; }
+                :host ::slotted(.col-sm-10) { width: 83.33333333%; }
+                :host ::slotted(.col-sm-9) { width: 75%; }
+                :host ::slotted(.col-sm-8) { width: 66.66666667%; }
+                :host ::slotted(.col-sm-7) { width: 58.33333333%; }
+                :host ::slotted(.col-sm-6) { width: 50%; }
+                :host ::slotted(.col-sm-5) { width: 41.66666667%; }
+                :host ::slotted(.col-sm-4) { width: 33.33333333%; }
+                :host ::slotted(.col-sm-3) { width: 25%; }
+                :host ::slotted(.col-sm-2) { width: 16.66666667%; }
+                :host ::slotted(.col-sm-1) { width: 8.33333333%; }
+                :host ::slotted(.col-sm-pull-12) { right: 100%; }
+                :host ::slotted(.col-sm-pull-11) { right: 91.66666667%; }
+                :host ::slotted(.col-sm-pull-10) { right: 83.33333333%; }
+                :host ::slotted(.col-sm-pull-9) { right: 75%; }
+                :host ::slotted(.col-sm-pull-8) { right: 66.66666667%; }
+                :host ::slotted(.col-sm-pull-7) { right: 58.33333333%; }
+                :host ::slotted(.col-sm-pull-6) { right: 50%; }
+                :host ::slotted(.col-sm-pull-5) { right: 41.66666667%; }
+                :host ::slotted(.col-sm-pull-4) { right: 33.33333333%; }
+                :host ::slotted(.col-sm-pull-3) { right: 25%; }
+                :host ::slotted(.col-sm-pull-2) { right: 16.66666667%; }
+                :host ::slotted(.col-sm-pull-1) { right: 8.33333333%; }
+                :host ::slotted(.col-sm-pull-0) { right: auto; }
+                :host ::slotted(.col-sm-push-12) { left: 100%; }
+                :host ::slotted(.col-sm-push-11) { left: 91.66666667%; }
+                :host ::slotted(.col-sm-push-10) { left: 83.33333333%; }
+                :host ::slotted(.col-sm-push-9) { left: 75%; }
+                :host ::slotted(.col-sm-push-8) { left: 66.66666667%; }
+                :host ::slotted(.col-sm-push-7) { left: 58.33333333%; }
+                :host ::slotted(.col-sm-push-6) { left: 50%; }
+                :host ::slotted(.col-sm-push-5) { left: 41.66666667%; }
+                :host ::slotted(.col-sm-push-4) { left: 33.33333333%; }
+                :host ::slotted(.col-sm-push-3) { left: 25%; }
+                :host ::slotted(.col-sm-push-2) { left: 16.66666667%; }
+                :host ::slotted(.col-sm-push-1) { left: 8.33333333%; }
+                :host ::slotted(.col-sm-push-0) { left: auto; }
+                :host ::slotted(.col-sm-offset-12) { margin-left: 100%; }
+                :host ::slotted(.col-sm-offset-11) { margin-left: 91.66666667%; }
+                :host ::slotted(.col-sm-offset-10) { margin-left: 83.33333333%; }
+                :host ::slotted(.col-sm-offset-9) { margin-left: 75%; }
+                :host ::slotted(.col-sm-offset-8) { margin-left: 66.66666667%; }
+                :host ::slotted(.col-sm-offset-7) { margin-left: 58.33333333%; }
+                :host ::slotted(.col-sm-offset-6) { margin-left: 50%; }
+                :host ::slotted(.col-sm-offset-5) { margin-left: 41.66666667%; }
+                :host ::slotted(.col-sm-offset-4) { margin-left: 33.33333333%; }
+                :host ::slotted(.col-sm-offset-3) { margin-left: 25%; }
+                :host ::slotted(.col-sm-offset-2) { margin-left: 16.66666667%; }
+                :host ::slotted(.col-sm-offset-1) { margin-left: 8.33333333%; }
+                :host ::slotted(.col-sm-offset-0) { margin-left: 0%; }
             }
 
             /* Override once screen is wider than 992px */
             @media (min-width: 992px) {
-                :host ::content .row > .col-md-1,
-                :host ::content .row > .col-md-2,
-                :host ::content .row > .col-md-3,
-                :host ::content .row > .col-md-4,
-                :host ::content .row > .col-md-5,
-                :host ::content .row > .col-md-6,
-                :host ::content .row > .col-md-7,
-                :host ::content .row > .col-md-8,
-                :host ::content .row > .col-md-9,
-                :host ::content .row > .col-md-10,
-                :host ::content .row > .col-md-11,
-                :host ::content .row > .col-md-12 { float: left; }
-                :host ::content .row > .col-md-12 { width: 100%; }
-                :host ::content .row > .col-md-11 { width: 91.66666667%; }
-                :host ::content .row > .col-md-10 { width: 83.33333333%; }
-                :host ::content .row > .col-md-9 { width: 75%; }
-                :host ::content .row > .col-md-8 { width: 66.66666667%; }
-                :host ::content .row > .col-md-7 { width: 58.33333333%; }
-                :host ::content .row > .col-md-6 { width: 50%; }
-                :host ::content .row > .col-md-5 { width: 41.66666667%; }
-                :host ::content .row > .col-md-4 { width: 33.33333333%; }
-                :host ::content .row > .col-md-3 { width: 25%; }
-                :host ::content .row > .col-md-2 { width: 16.66666667%; }
-                :host ::content .row > .col-md-1 { width: 8.33333333%; }
-                :host ::content .row > .col-md-pull-12 { right: 100%; }
-                :host ::content .row > .col-md-pull-11 { right: 91.66666667%; }
-                :host ::content .row > .col-md-pull-10 { right: 83.33333333%; }
-                :host ::content .row > .col-md-pull-9 { right: 75%; }
-                :host ::content .row > .col-md-pull-8 { right: 66.66666667%; }
-                :host ::content .row > .col-md-pull-7 { right: 58.33333333%; }
-                :host ::content .row > .col-md-pull-6 { right: 50%; }
-                :host ::content .row > .col-md-pull-5 { right: 41.66666667%; }
-                :host ::content .row > .col-md-pull-4 { right: 33.33333333%; }
-                :host ::content .row > .col-md-pull-3 { right: 25%; }
-                :host ::content .row > .col-md-pull-2 { right: 16.66666667%; }
-                :host ::content .row > .col-md-pull-1 { right: 8.33333333%; }
-                :host ::content .row > .col-md-pull-0 { right: auto; }
-                :host ::content .row > .col-md-push-12 { left: 100%; }
-                :host ::content .row > .col-md-push-11 { left: 91.66666667%; }
-                :host ::content .row > .col-md-push-10 { left: 83.33333333%; }
-                :host ::content .row > .col-md-push-9 { left: 75%; }
-                :host ::content .row > .col-md-push-8 { left: 66.66666667%; }
-                :host ::content .row > .col-md-push-7 { left: 58.33333333%; }
-                :host ::content .row > .col-md-push-6 { left: 50%; }
-                :host ::content .row > .col-md-push-5 { left: 41.66666667%; }
-                :host ::content .row > .col-md-push-4 { left: 33.33333333%; }
-                :host ::content .row > .col-md-push-3 { left: 25%; }
-                :host ::content .row > .col-md-push-2 { left: 16.66666667%; }
-                :host ::content .row > .col-md-push-1 { left: 8.33333333%; }
-                :host ::content .row > .col-md-push-0 { left: auto; }
-                :host ::content .row > .col-md-offset-12 { margin-left: 100%; }
-                :host ::content .row > .col-md-offset-11 { margin-left: 91.66666667%; }
-                :host ::content .row > .col-md-offset-10 { margin-left: 83.33333333%; }
-                :host ::content .row > .col-md-offset-9 { margin-left: 75%; }
-                :host ::content .row > .col-md-offset-8 { margin-left: 66.66666667%; }
-                :host ::content .row > .col-md-offset-7 { margin-left: 58.33333333%; }
-                :host ::content .row > .col-md-offset-6 { margin-left: 50%; }
-                :host ::content .row > .col-md-offset-5 { margin-left: 41.66666667%; }
-                :host ::content .row > .col-md-offset-4 { margin-left: 33.33333333%; }
-                :host ::content .row > .col-md-offset-3 { margin-left: 25%; }
-                :host ::content .row > .col-md-offset-2 { margin-left: 16.66666667%; }
-                :host ::content .row > .col-md-offset-1 { margin-left: 8.33333333%; }
-                :host ::content .row > .col-md-offset-0 { margin-left: 0%; }
+                :host ::slotted(.col-md-1),
+                :host ::slotted(.col-md-2),
+                :host ::slotted(.col-md-3),
+                :host ::slotted(.col-md-4),
+                :host ::slotted(.col-md-5),
+                :host ::slotted(.col-md-6),
+                :host ::slotted(.col-md-7),
+                :host ::slotted(.col-md-8),
+                :host ::slotted(.col-md-9),
+                :host ::slotted(.col-md-10),
+                :host ::slotted(.col-md-11),
+                :host ::slotted(.col-md-12) { float: left; }
+                :host ::slotted(.col-md-12) { width: 100%; }
+                :host ::slotted(.col-md-11) { width: 91.66666667%; }
+                :host ::slotted(.col-md-10) { width: 83.33333333%; }
+                :host ::slotted(.col-md-9) { width: 75%; }
+                :host ::slotted(.col-md-8) { width: 66.66666667%; }
+                :host ::slotted(.col-md-7) { width: 58.33333333%; }
+                :host ::slotted(.col-md-6) { width: 50%; }
+                :host ::slotted(.col-md-5) { width: 41.66666667%; }
+                :host ::slotted(.col-md-4) { width: 33.33333333%; }
+                :host ::slotted(.col-md-3) { width: 25%; }
+                :host ::slotted(.col-md-2) { width: 16.66666667%; }
+                :host ::slotted(.col-md-1) { width: 8.33333333%; }
+                :host ::slotted(.col-md-pull-12) { right: 100%; }
+                :host ::slotted(.col-md-pull-11) { right: 91.66666667%; }
+                :host ::slotted(.col-md-pull-10) { right: 83.33333333%; }
+                :host ::slotted(.col-md-pull-9) { right: 75%; }
+                :host ::slotted(.col-md-pull-8) { right: 66.66666667%; }
+                :host ::slotted(.col-md-pull-7) { right: 58.33333333%; }
+                :host ::slotted(.col-md-pull-6) { right: 50%; }
+                :host ::slotted(.col-md-pull-5) { right: 41.66666667%; }
+                :host ::slotted(.col-md-pull-4) { right: 33.33333333%; }
+                :host ::slotted(.col-md-pull-3) { right: 25%; }
+                :host ::slotted(.col-md-pull-2) { right: 16.66666667%; }
+                :host ::slotted(.col-md-pull-1) { right: 8.33333333%; }
+                :host ::slotted(.col-md-pull-0) { right: auto; }
+                :host ::slotted(.col-md-push-12) { left: 100%; }
+                :host ::slotted(.col-md-push-11) { left: 91.66666667%; }
+                :host ::slotted(.col-md-push-10) { left: 83.33333333%; }
+                :host ::slotted(.col-md-push-9) { left: 75%; }
+                :host ::slotted(.col-md-push-8) { left: 66.66666667%; }
+                :host ::slotted(.col-md-push-7) { left: 58.33333333%; }
+                :host ::slotted(.col-md-push-6) { left: 50%; }
+                :host ::slotted(.col-md-push-5) { left: 41.66666667%; }
+                :host ::slotted(.col-md-push-4) { left: 33.33333333%; }
+                :host ::slotted(.col-md-push-3) { left: 25%; }
+                :host ::slotted(.col-md-push-2) { left: 16.66666667%; }
+                :host ::slotted(.col-md-push-1) { left: 8.33333333%; }
+                :host ::slotted(.col-md-push-0) { left: auto; }
+                :host ::slotted(.col-md-offset-12) { margin-left: 100%; }
+                :host ::slotted(.col-md-offset-11) { margin-left: 91.66666667%; }
+                :host ::slotted(.col-md-offset-10) { margin-left: 83.33333333%; }
+                :host ::slotted(.col-md-offset-9) { margin-left: 75%; }
+                :host ::slotted(.col-md-offset-8) { margin-left: 66.66666667%; }
+                :host ::slotted(.col-md-offset-7) { margin-left: 58.33333333%; }
+                :host ::slotted(.col-md-offset-6) { margin-left: 50%; }
+                :host ::slotted(.col-md-offset-5) { margin-left: 41.66666667%; }
+                :host ::slotted(.col-md-offset-4) { margin-left: 33.33333333%; }
+                :host ::slotted(.col-md-offset-3) { margin-left: 25%; }
+                :host ::slotted(.col-md-offset-2) { margin-left: 16.66666667%; }
+                :host ::slotted(.col-md-offset-1) { margin-left: 8.33333333%; }
+                :host ::slotted(.col-md-offset-0) { margin-left: 0%; }
             }
 
             /* Override once screen is wider than 1200px */
             @media (min-width: 1200px) {
-                :host ::content .row > .col-lg-1,
-                :host ::content .row > .col-lg-2,
-                :host ::content .row > .col-lg-3,
-                :host ::content .row > .col-lg-4,
-                :host ::content .row > .col-lg-5,
-                :host ::content .row > .col-lg-6,
-                :host ::content .row > .col-lg-7,
-                :host ::content .row > .col-lg-8,
-                :host ::content .row > .col-lg-9,
-                :host ::content .row > .col-lg-10,
-                :host ::content .row > .col-lg-11,
-                :host ::content .row > .col-lg-12 { float: left; }
-                :host ::content .row > .col-lg-12 { width: 100%; }
-                :host ::content .row > .col-lg-11 { width: 91.66666667%; }
-                :host ::content .row > .col-lg-10 { width: 83.33333333%; }
-                :host ::content .row > .col-lg-9 { width: 75%; }
-                :host ::content .row > .col-lg-8 { width: 66.66666667%; }
-                :host ::content .row > .col-lg-7 { width: 58.33333333%; }
-                :host ::content .row > .col-lg-6 { width: 50%; }
-                :host ::content .row > .col-lg-5 { width: 41.66666667%; }
-                :host ::content .row > .col-lg-4 { width: 33.33333333%; }
-                :host ::content .row > .col-lg-3 { width: 25%; }
-                :host ::content .row > .col-lg-2 { width: 16.66666667%; }
-                :host ::content .row > .col-lg-1 { width: 8.33333333%; }
-                :host ::content .row > .col-lg-pull-12 { right: 100%; }
-                :host ::content .row > .col-lg-pull-11 { right: 91.66666667%; }
-                :host ::content .row > .col-lg-pull-10 { right: 83.33333333%; }
-                :host ::content .row > .col-lg-pull-9 { right: 75%; }
-                :host ::content .row > .col-lg-pull-8 { right: 66.66666667%; }
-                :host ::content .row > .col-lg-pull-7 { right: 58.33333333%; }
-                :host ::content .row > .col-lg-pull-6 { right: 50%; }
-                :host ::content .row > .col-lg-pull-5 { right: 41.66666667%; }
-                :host ::content .row > .col-lg-pull-4 { right: 33.33333333%; }
-                :host ::content .row > .col-lg-pull-3 { right: 25%; }
-                :host ::content .row > .col-lg-pull-2 { right: 16.66666667%; }
-                :host ::content .row > .col-lg-pull-1 { right: 8.33333333%; }
-                :host ::content .row > .col-lg-pull-0 { right: auto; }
-                :host ::content .row > .col-lg-push-12 { left: 100%; }
-                :host ::content .row > .col-lg-push-11 { left: 91.66666667%; }
-                :host ::content .row > .col-lg-push-10 { left: 83.33333333%; }
-                :host ::content .row > .col-lg-push-9 { left: 75%; }
-                :host ::content .row > .col-lg-push-8 { left: 66.66666667%; }
-                :host ::content .row > .col-lg-push-7 { left: 58.33333333%; }
-                :host ::content .row > .col-lg-push-6 { left: 50%; }
-                :host ::content .row > .col-lg-push-5 { left: 41.66666667%; }
-                :host ::content .row > .col-lg-push-4 { left: 33.33333333%; }
-                :host ::content .row > .col-lg-push-3 { left: 25%; }
-                :host ::content .row > .col-lg-push-2 { left: 16.66666667%; }
-                :host ::content .row > .col-lg-push-1 { left: 8.33333333%; }
-                :host ::content .row > .col-lg-push-0 { left: auto; }
-                :host ::content .row > .col-lg-offset-12 { margin-left: 100%; }
-                :host ::content .row > .col-lg-offset-11 { margin-left: 91.66666667%; }
-                :host ::content .row > .col-lg-offset-10 { margin-left: 83.33333333%; }
-                :host ::content .row > .col-lg-offset-9 { margin-left: 75%; }
-                :host ::content .row > .col-lg-offset-8 { margin-left: 66.66666667%; }
-                :host ::content .row > .col-lg-offset-7 { margin-left: 58.33333333%; }
-                :host ::content .row > .col-lg-offset-6 { margin-left: 50%; }
-                :host ::content .row > .col-lg-offset-5 { margin-left: 41.66666667%; }
-                :host ::content .row > .col-lg-offset-4 { margin-left: 33.33333333%; }
-                :host ::content .row > .col-lg-offset-3 { margin-left: 25%; }
-                :host ::content .row > .col-lg-offset-2 { margin-left: 16.66666667%; }
-                :host ::content .row > .col-lg-offset-1 { margin-left: 8.33333333%; }
-                :host ::content .row > .col-lg-offset-0 { margin-left: 0%; }
+                :host ::slotted(.col-lg-1),
+                :host ::slotted(.col-lg-2),
+                :host ::slotted(.col-lg-3),
+                :host ::slotted(.col-lg-4),
+                :host ::slotted(.col-lg-5),
+                :host ::slotted(.col-lg-6),
+                :host ::slotted(.col-lg-7),
+                :host ::slotted(.col-lg-8),
+                :host ::slotted(.col-lg-9),
+                :host ::slotted(.col-lg-10),
+                :host ::slotted(.col-lg-11),
+                :host ::slotted(.col-lg-12) { float: left; }
+                :host ::slotted(.col-lg-12) { width: 100%; }
+                :host ::slotted(.col-lg-11) { width: 91.66666667%; }
+                :host ::slotted(.col-lg-10) { width: 83.33333333%; }
+                :host ::slotted(.col-lg-9) { width: 75%; }
+                :host ::slotted(.col-lg-8) { width: 66.66666667%; }
+                :host ::slotted(.col-lg-7) { width: 58.33333333%; }
+                :host ::slotted(.col-lg-6) { width: 50%; }
+                :host ::slotted(.col-lg-5) { width: 41.66666667%; }
+                :host ::slotted(.col-lg-4) { width: 33.33333333%; }
+                :host ::slotted(.col-lg-3) { width: 25%; }
+                :host ::slotted(.col-lg-2) { width: 16.66666667%; }
+                :host ::slotted(.col-lg-1) { width: 8.33333333%; }
+                :host ::slotted(.col-lg-pull-12) { right: 100%; }
+                :host ::slotted(.col-lg-pull-11) { right: 91.66666667%; }
+                :host ::slotted(.col-lg-pull-10) { right: 83.33333333%; }
+                :host ::slotted(.col-lg-pull-9) { right: 75%; }
+                :host ::slotted(.col-lg-pull-8) { right: 66.66666667%; }
+                :host ::slotted(.col-lg-pull-7) { right: 58.33333333%; }
+                :host ::slotted(.col-lg-pull-6) { right: 50%; }
+                :host ::slotted(.col-lg-pull-5) { right: 41.66666667%; }
+                :host ::slotted(.col-lg-pull-4) { right: 33.33333333%; }
+                :host ::slotted(.col-lg-pull-3) { right: 25%; }
+                :host ::slotted(.col-lg-pull-2) { right: 16.66666667%; }
+                :host ::slotted(.col-lg-pull-1) { right: 8.33333333%; }
+                :host ::slotted(.col-lg-pull-0) { right: auto; }
+                :host ::slotted(.col-lg-push-12) { left: 100%; }
+                :host ::slotted(.col-lg-push-11) { left: 91.66666667%; }
+                :host ::slotted(.col-lg-push-10) { left: 83.33333333%; }
+                :host ::slotted(.col-lg-push-9) { left: 75%; }
+                :host ::slotted(.col-lg-push-8) { left: 66.66666667%; }
+                :host ::slotted(.col-lg-push-7) { left: 58.33333333%; }
+                :host ::slotted(.col-lg-push-6) { left: 50%; }
+                :host ::slotted(.col-lg-push-5) { left: 41.66666667%; }
+                :host ::slotted(.col-lg-push-4) { left: 33.33333333%; }
+                :host ::slotted(.col-lg-push-3) { left: 25%; }
+                :host ::slotted(.col-lg-push-2) { left: 16.66666667%; }
+                :host ::slotted(.col-lg-push-1) { left: 8.33333333%; }
+                :host ::slotted(.col-lg-push-0) { left: auto; }
+                :host ::slotted(.col-lg-offset-12) { margin-left: 100%; }
+                :host ::slotted(.col-lg-offset-11) { margin-left: 91.66666667%; }
+                :host ::slotted(.col-lg-offset-10) { margin-left: 83.33333333%; }
+                :host ::slotted(.col-lg-offset-9) { margin-left: 75%; }
+                :host ::slotted(.col-lg-offset-8) { margin-left: 66.66666667%; }
+                :host ::slotted(.col-lg-offset-7) { margin-left: 58.33333333%; }
+                :host ::slotted(.col-lg-offset-6) { margin-left: 50%; }
+                :host ::slotted(.col-lg-offset-5) { margin-left: 41.66666667%; }
+                :host ::slotted(.col-lg-offset-4) { margin-left: 33.33333333%; }
+                :host ::slotted(.col-lg-offset-3) { margin-left: 25%; }
+                :host ::slotted(.col-lg-offset-2) { margin-left: 16.66666667%; }
+                :host ::slotted(.col-lg-offset-1) { margin-left: 8.33333333%; }
+                :host ::slotted(.col-lg-offset-0) { margin-left: 0%; }
             }
         </style>
-        <content></content>
+        <slot></slot>
     </template>
-    <script>Polymer({ is: 'bootstrap-grid' });</script>
+    <script>
+        class BootstrapRow extends Polymer.Element { static get is() { return 'bootstrap-row'; } }
+        customElements.define(BootstrapRow.is, BootstrapRow);
+    </script>
+</dom-module>
+
+<dom-module id="bootstrap-grid">
+    <template strip-whitespace>
+        <style>
+            :host {
+                display: block;
+                margin-right: auto;
+                margin-left: auto;
+                padding-left: var(--bootstrap-grid-gutter, 15px);
+                padding-right: var(--bootstrap-grid-gutter, 15px);
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+                /* Clear fix/fix floats for the grid container and each row */
+                :host:before,
+                :host:after {
+                    content: " ";
+                    display: table;
+                }
+
+                :host:after {
+                    clear: both;
+                }
+        </style>
+        <slot></slot>
+    </template>
+    <script>
+        class BootstrapGrid extends Polymer.Element { static get is() { return 'bootstrap-grid'; } }
+        customElements.define(BootstrapGrid.is, BootstrapGrid);
+    </script>
 </dom-module>

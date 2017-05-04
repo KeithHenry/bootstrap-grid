@@ -12,8 +12,8 @@ Use Bootstrap responsive grid styles in a Polymer component.
         <style>
             :host {
                 display: block;
-                margin-left: var(--bootstrap-grid-gutter * -1, -15px);
-                margin-right: var(--bootstrap-grid-gutter * -1, -15px);
+                margin-left: calc(var(--bootstrap-grid-gutter, 15px) * -1);
+                margin-right: calc(var(--bootstrap-grid-gutter, 15px) * -1);
                 padding-left: var(--bootstrap-grid-gutter, 15px);
                 padding-right: var(--bootstrap-grid-gutter, 15px);
                 -webkit-box-sizing: border-box;
